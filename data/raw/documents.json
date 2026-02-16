@@ -5,7 +5,7 @@
   },
   {
     "id": 2,
-    "text": "Retrieval-Augmented Generation (RAG) improves factual accuracy by incorporating external documents."
+    "text": "Retrieval-Augmented Generation (RAG) improves factual accuracy by combining language models with external document sources."
   },
   {
     "id": 3,
@@ -13,6 +13,6 @@
   },
   {
     "id": 4,
-    "text": "Vector databases enable similarity search over embedded representations of text."
+    "text": "Vector databases store and index embeddings to enable similarity search, which is commonly used in RAG pipelines."
   }
 ]
