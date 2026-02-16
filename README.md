@@ -9,7 +9,8 @@ rag-evaluation-framework/
 ├── data/                   # Raw and processed datasets
 │   ├── raw/
 │   └── processed/
-├── rag_evaluation.ipynb    # Main Jupyter notebook (top-level)
+├── notebooks/              # Jupyter notebooks
+│   └── rag_evaluation.ipynb
 ├── src/                    # Python modules / scripts
 │   └── rag_eval/           # Namespaced package
 │       ├── __init__.py     # Package initializer
