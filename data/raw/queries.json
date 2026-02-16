@@ -1,0 +1,14 @@
+[
+  {
+    "query": "What causes hallucinations in language models?",
+    "ground_truth_doc_id": 3
+  },
+  {
+    "query": "How does RAG improve factual accuracy?",
+    "ground_truth_doc_id": 2
+  },
+  {
+    "query": "What is the role of vector databases in RAG?",
+    "ground_truth_doc_id": 4
+  }
+]

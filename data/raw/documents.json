@@ -1,0 +1,18 @@
+[
+  {
+    "id": 1,
+    "text": "Anthropic develops AI systems with a focus on safety and alignment research."
+  },
+  {
+    "id": 2,
+    "text": "Retrieval-Augmented Generation (RAG) improves factual accuracy by incorporating external documents."
+  },
+  {
+    "id": 3,
+    "text": "Hallucinations in large language models occur when the model generates unsupported or fabricated information."
+  },
+  {
+    "id": 4,
+    "text": "Vector databases enable similarity search over embedded representations of text."
+  }
+]
