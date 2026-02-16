@@ -17,7 +17,16 @@ class EmbeddingModel:
             )
         return api_key        
 
+    def embed_text(self, text: str) -> List[float]:
+        """
+        Embed a single text by calling embed_texts under the hood.
+        """
+        return self.embed_texts([text])[0]
+
     def embed_texts(self, texts: List[str]) -> List[List[float]]:
+        """
+        Embed a list of texts.
+        """        
         response = self.client.embeddings.create(
             model=self.model_name,
             input=texts
