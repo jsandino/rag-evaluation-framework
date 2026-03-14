@@ -12,4 +12,7 @@ test:
 	python -m pytest
 
 run:
-	python main.py
+	python -m rag_eval.cli
+
+rag-eval:
+	pip install -e .

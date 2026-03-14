@@ -6,6 +6,9 @@ build-backend = "setuptools.build_meta"
 name = "rag-eval"
 version = "0.1.0"
 
+[project.scripts]
+rag-eval = "rag_eval.cli:main"
+
 [tool.setuptools]
 package-dir = {"" = "src"}
 
