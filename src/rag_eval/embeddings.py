@@ -1,14 +1,21 @@
-from typing import List
+from typing import List, Optional
 from openai import OpenAI
 import os
 from pathlib import Path
 import pandas as pd
 
+from rag_eval.cache import EmbeddingCache
+
 
 class EmbeddingModel:
-    def __init__(self, model_name: str = "text-embedding-3-small"):
+    def __init__(
+        self,
+        model_name: str = "text-embedding-3-small",
+        cache: Optional[EmbeddingCache] = None,
+    ):
         self.model_name = model_name
         self.client = OpenAI(api_key=self._load_api_key())
+        self.cache = cache
 
     @staticmethod
     def _load_api_key() -> str:
@@ -32,6 +39,38 @@ class EmbeddingModel:
         """
         response = self.client.embeddings.create(model=self.model_name, input=texts)
         return [item.embedding for item in response.data]
+
+    def get_document_embeddings(
+        self,
+        documents: List[dict],
+        text_field: str = "text",
+        embedding_field: str = "embedding",
+        regenerate: bool = False,
+    ) -> List[dict]:
+        """
+        Get document embeddings, using cache if enabled.
+
+        Args:
+            documents: List of dicts containing at least `text_field`.
+            text_field: Key in each dict with the text content.
+            embedding_field: Key to store the embedding.
+            cache_enabled: Whether to use caching.
+        Returns:
+            A new list of document dicts with embeddings added.
+        """
+        if not regenerate and self.cache and self.cache.exists():
+            return self.cache.load()
+
+        embedded_docs = self.generate_document_embeddings(
+            documents,
+            text_field,
+            embedding_field,
+        )
+
+        if self.cache:
+            self.cache.save(embedded_docs)
+
+        return embedded_docs
 
     def generate_document_embeddings(
         self,
@@ -64,27 +103,3 @@ class EmbeddingModel:
             new_doc[embedding_field] = emb
             result.append(new_doc)
         return result
-
-    def save_embeddings(self, documents: list[dict], file_path: Path) -> None:
-        """
-        Save documents (with embeddings) to a Parquet file.
-
-        Args:
-            documents: List of dicts with 'embedding' key.
-            file_path: Path to write the parquet file.
-        """
-        df = pd.DataFrame(documents)
-        df.to_parquet(file_path, index=False)
-
-    def load_embeddings(self, file_path: Path) -> list[dict]:
-        """
-        Load embeddings from a Parquet file and return as list of dicts.
-
-        Args:
-            file_path: Path to parquet file.
-
-        Returns:
-            List of dicts with embeddings.
-        """
-        df = pd.read_parquet(file_path)
-        return df.to_dict(orient="records")
